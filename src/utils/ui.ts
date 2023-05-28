@@ -1,7 +1,6 @@
 import {getStorageData, setStorageData} from "./storage";
 import {storageKeys, themes} from "./constants";
 
-
 export function getCurrentTheme() {
   let currentTheme = getStorageData(storageKeys.THEME);
   if (!currentTheme) {

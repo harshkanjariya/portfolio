@@ -1,15 +1,15 @@
 import React from "react";
 import {DarkMode, LightMode} from "@mui/icons-material";
 import styles from './ThemeButton.module.css';
-import {getCurrentTheme, toggleDarkTheme} from "../../utils/ui";
 import {themes} from "../../utils/constants";
+import {useTheme} from "../../core/ThemeProvider";
 
 function ThemeButton() {
-  const currentTheme = getCurrentTheme();
+  const {currentTheme, toggleTheme} = useTheme();
 
   return <div className={styles.themeButton}>
     <input type="checkbox"
-           onChange={toggleDarkTheme}
+           onChange={toggleTheme}
            defaultChecked={currentTheme == themes.dark}
            className={styles.checkbox}
            id="checkbox"/>
