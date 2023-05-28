@@ -4,29 +4,11 @@ import {useState} from "react";
 import PathView from "../../components/PathView/PathView";
 import {Dialog, DialogTitle, DialogContent, DialogActions, Button} from '@mui/material';
 import { Close } from '@mui/icons-material';
-import {useTheme} from "../../core/ThemeProvider";
-
-interface FileInfo {
-  details?: {
-    github: string;
-    preview: string;
-    description: string;
-  };
-}
-
-interface FolderStructure {
-  [key: string]: FolderProps & { children: FolderStructure } & FileInfo;
-}
+import {FileInfo, FolderStructure, Path} from "../../utils/types";
 
 const fs: FolderStructure = require('../../assets/data/fs.json');
 
-export interface Path {
-  value: string;
-  label: string;
-}
-
 function FileExplorer() {
-  const {currentTheme} = useTheme();
   const [path, setPath] = useState<Path[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState({} as any);

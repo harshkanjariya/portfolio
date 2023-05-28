@@ -1,5 +1,5 @@
 import styles from './PathView.module.scss';
-import {Path} from "../../pages/FileExplorer/FileExplorer";
+import {Path} from "../../utils/types";
 
 export interface PathViewProps {
   className?: string,
