@@ -1,6 +1,6 @@
 html {
-  --primary-color: #00a0ff;
-  --secondary-color: #0070f0;
+  --primary-color: black;
+  --secondary-color: #202020;
   --background-color: white;
   --background-secondary-color: white;
   --font-color: black;
@@ -8,8 +8,8 @@ html {
 }
 
 html[data-theme="dark"] {
-  --primary-color: #ffffff;
-  --secondary-color: #e0e0e0;
+  --primary-color: #7FFF00;
+  --secondary-color: #4fcd00;
   --background-color: black;
   --background-secondary-color: hsl(0, 0%, 19%);
   --font-color: white;

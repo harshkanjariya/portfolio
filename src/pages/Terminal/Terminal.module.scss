@@ -1,0 +1,25 @@
+.terminal {
+  color: var(--primary-color);
+  overflow: auto;
+}
+
+.prompt {
+  display: inline-block;
+}
+
+.promptRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.stdin {
+  flex: 1;
+  border: 0;
+  font-size: 16px;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
+
+.stdin:focus {
+  outline: none;
+}

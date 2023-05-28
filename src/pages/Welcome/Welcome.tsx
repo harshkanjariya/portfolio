@@ -18,7 +18,7 @@ function Welcome() {
   } else if (step == 1) {
     CenterComponent = <EnvironmentSelection onSelect={(selectedEnv) => {
       setEnvironment(selectedEnv);
-      navigate(routes.gui);
+      navigate(selectedEnv == 'gui' ? routes.gui : routes.cli);
     }}/>
   }
 
