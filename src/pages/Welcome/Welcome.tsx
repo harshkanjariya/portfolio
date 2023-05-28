@@ -1,32 +1,58 @@
 import React, {useState} from "react";
 import Header from "../../components/Header/Header";
 import styles from './Welcome.module.scss';
-import InitialTyping from "../../components/Welcome/InitialTyping";
+import Typing from "../../components/Welcome/Typing/Typing";
 import EnvironmentSelection from "../../components/Welcome/EnvironmentSelection/EnvironmentSelection";
 import {setEnvironment} from "../../utils/ui";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../../core/router";
+
+const messageList = [
+  'Hello!',
+  'I\'m Harsh Kanjariya',
+  'Welcome to my portfolio',
+];
 
 
 function Welcome() {
-  const [step, setStep] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   let CenterComponent;
-  if (step == 0) {
-    CenterComponent = <InitialTyping onEnd={() => setStep(1)}/>;
-  } else if (step == 1) {
+  if (location.hash === '') {
+    CenterComponent = <Typing
+      messageList={messageList}
+      onEnd={() => navigate('/#environments')}
+    />;
+  } else if (location.hash == '#typing') {
+    CenterComponent = <Typing
+      messageList={location.state.messageList || []}
+      onEnd={() => navigate(location.state.navigate)}
+    />;
+  } else if (location.hash == '#environments') {
     CenterComponent = <EnvironmentSelection onSelect={(selectedEnv) => {
       setEnvironment(selectedEnv);
-      navigate(selectedEnv == 'gui' ? routes.gui : routes.cli);
+      if (selectedEnv == 'gui') {
+        navigate('/#typing', {
+          state: {
+            navigate: routes.windows,
+            messageList: ['Here\'s my life,\n if it was a windows.'],
+          }
+        })
+      } else {
+        navigate('/#typing', {
+          state: {
+            navigate: routes.cli,
+            messageList: ['Here\'s my life,\n if it was a terminal.'],
+          }
+        })
+      }
     }}/>
   }
 
   return <>
     <Header/>
-    <div className={'page-body ' + styles.welcomePage}>
-      {CenterComponent}
-    </div>
+    {CenterComponent}
   </>;
 }
 

@@ -1,0 +1,13 @@
+.windows {
+  background-image: url("/../public/images/windows-background.jpeg" );
+
+  :global(.folder-name) {
+    color: white;
+  }
+}
+
+.folderList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

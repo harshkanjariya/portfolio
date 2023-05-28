@@ -1,13 +1,15 @@
 import {createBrowserRouter} from "react-router-dom";
 import Welcome from "../pages/Welcome/Welcome";
-import FileExplorer from "../pages/FileExplorer/FileExplorer";
 import Header from "../components/Header/Header";
 import Terminal from "../pages/Terminal/Terminal";
+import Windows from "../pages/Windows/Windows";
+import FileExplorer from "../pages/FileExplorer/FileExplorer";
 
 export const routes = {
-  gui: '/file-explorer',
+  windows: '/windows',
+  files: '/file-explorer',
   cli: '/terminal',
-  home: '/',
+  home: '/'
 };
 
 export const router = createBrowserRouter([
@@ -16,8 +18,12 @@ export const router = createBrowserRouter([
     element: <Welcome/>,
   },
   {
-    path: routes.gui,
-    element: <><Header/><FileExplorer/></>,
+    path: routes.windows,
+    element: <Windows/>,
+  },
+  {
+    path: routes.files,
+    element: <FileExplorer/>,
   },
   {
     path: routes.cli,

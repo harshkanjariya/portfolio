@@ -1,17 +1,18 @@
-import {useTheme} from "../../core/ThemeProvider";
+import {useTheme} from "../../../core/ThemeProvider";
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {TypewriterHandlers} from "typing-animation-react/stories/Typewriter/Typewriter";
-import {addEnterCallback, removeEnterCallback} from "../../utils/keyboardEvents";
+import {addEnterCallback, removeEnterCallback} from "../../../utils/keyboardEvents";
 import Typewriter from "typing-animation-react";
-import {themes} from "../../utils/constants";
+import {themes} from "../../../utils/constants";
+import styles from './Typing.module.scss';
 
-const messageList = [
-  'Hello!',
-  'I\'m Harsh Kanjariya',
-  'Welcome to my portfolio',
-];
+export interface TypingProps {
+  messageList: string[],
+  className?: string,
+  onEnd: () => void,
+}
 
-function InitialTyping(props: any) {
+function Typing({messageList, ...props}: TypingProps) {
   const {currentTheme} = useTheme();
   const [messageIndex, setMessageIndex] = useState(0);
   const [animEndTime, setAnimEndTime] = useState(-1);
@@ -43,12 +44,13 @@ function InitialTyping(props: any) {
     }
   }, [onEnter]);
 
-  return <div className={props.className}>
+  return <div className={'page-body ' + styles.typing}>
     <Typewriter
       style={{
         fontSize: '30px',
         maxWidth: 500,
         textAlign: 'center',
+        transform: 'translateY(-100%)'
       }}
       cursorWidth={3}
       cursorColor={currentTheme == themes.dark ? 'white' : 'black'}
@@ -56,7 +58,8 @@ function InitialTyping(props: any) {
       delay={50}
       onAnimationEnd={() => setAnimEndTime(Date.now())}
     />
+    <div style={{position: 'fixed', right: 0, bottom: 0}}>Press Enter to continue...</div>
   </div>
 }
 
-export default InitialTyping;
+export default Typing;

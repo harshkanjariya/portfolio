@@ -1,7 +1,8 @@
-.root {
+.envSelect {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .envList {
@@ -33,9 +34,6 @@
 [data-theme="dark"] {
   .env {
     border: 1px solid #555;
-  }
-  .env img {
-    filter: invert(1);
   }
 
   .env:hover {

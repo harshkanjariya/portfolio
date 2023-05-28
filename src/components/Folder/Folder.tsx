@@ -1,18 +1,17 @@
+import BaseFolder from "./BaseFolder";
+
 export interface FolderProps {
-  name: string,
   isDir?: boolean,
+  name: string,
   onOpen?: () => void,
 }
 
 function Folder(props: FolderProps) {
-  const Img = props.isDir ?
-    <img src="/icons/folder.png" alt="folder"/> :
-    <img src="/icons/file.png" alt="file"/>
-
-  return <div className="folder" onClick={props.onOpen}>
-    {Img}
-    <span className="folder-name">{props.name}</span>
-  </div>;
+  if (props.isDir) {
+    return <BaseFolder name={props.name} image={'/icons/folder.png'} onOpen={props.onOpen}/>
+  } else {
+    return <BaseFolder name={props.name} image={'/icons/file.png'} onOpen={props.onOpen}/>
+  }
 }
 
 Folder.defaultProps = {

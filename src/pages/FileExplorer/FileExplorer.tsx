@@ -60,11 +60,15 @@ function FileExplorer() {
   const currentFolder: FolderStructure = getCurrentFolder();
 
   return (
-    <div className={'page-body ' + styles.fileExplorer}>
+    <div className={'full-page ' + styles.fileExplorer}>
       <PathView
         path={path}
         onPathClick={handlePathClick}
         className={styles.pathContainer}
+      />
+      <Close
+        style={{ position: 'absolute', right: 20, top: 20 }}
+        onClick={() => window.history.back()}
       />
       <div className={styles.folderList}>
         {Object.keys(currentFolder).map((key) => {
