@@ -11,7 +11,7 @@ html[data-theme="dark"] {
   --primary-color: #ffffff;
   --secondary-color: #e0e0e0;
   --background-color: black;
-  --background-secondary-color: hsla(0, 100%, 100%, 0.16);
+  --background-secondary-color: hsl(0, 0%, 19%);
   --font-color: white;
 }
 

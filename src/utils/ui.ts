@@ -1,6 +1,14 @@
 import {getStorageData, setStorageData} from "./storage";
 import {storageKeys, themes} from "./constants";
 
+export function getCurrentEnvironment() {
+  return getStorageData(storageKeys.ENV);
+}
+
+export function setEnvironment(env: string) {
+  setStorageData(storageKeys.ENV, env);
+}
+
 export function getCurrentTheme() {
   let currentTheme = getStorageData(storageKeys.THEME);
   if (!currentTheme) {

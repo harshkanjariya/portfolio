@@ -1,0 +1,44 @@
+{
+  "education": {
+    "name": "Education",
+    "isDir": true,
+    "children": {
+      "school": {
+        "name": "School",
+        "isDir": true,
+        "children": {
+          "seven": {
+            "name": "7th",
+            "isDir": false
+          }
+        }
+      }
+    }
+  },
+  "contribution": {
+    "name": "Contribution",
+    "isDir": true,
+    "children": {}
+  },
+  "projects": {
+    "name": "Projects",
+    "isDir": true,
+    "children": {
+      "maze-generator": {
+        "name": "Maze Generator",
+        "isDir": false,
+        "details": {
+          "github": "https://github.com/harshkanjariya/maze-generator",
+          "preview": "https://harshkanjariya.github.io/maze-generator",
+          "description": "A fun code written that create random maze everytime."
+        },
+        "children": {}
+      }
+    }
+  },
+  "experience": {
+    "name": "Experience",
+    "isDir": true,
+    "children": {}
+  }
+}

@@ -1,0 +1,14 @@
+.fileExplorer {
+  padding: 20px 40px;
+  min-height: calc(100vh - var(--header-height) - 40px);
+}
+
+.pathContainer {
+  margin: 10px 10px 40px 10px;
+}
+
+.folderList {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

@@ -1,5 +1,6 @@
 const storageKeys = {
   THEME: 'theme',
+  ENV: 'environment',
 };
 
 const themes = {
