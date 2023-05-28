@@ -1,6 +1,6 @@
 import styles from './EnvironmentSelection.module.scss';
 import {useTheme} from "../../../core/ThemeProvider";
-import {themes} from "../../../utils/constants";
+import {environments} from "../../../utils/constants";
 
 export interface EnvironmentSelectionProps {
   className?: string,
@@ -14,11 +14,11 @@ function EnvironmentSelection(props: EnvironmentSelectionProps) {
     <span style={{marginTop: '-100px'}}>Please select the environment :</span>
     <div style={{height: 30}}/>
     <div className={styles.envList}>
-      <div className={styles.env} onClick={() => props.onSelect('gui')}>
+      <div className={styles.env} onClick={() => props.onSelect(environments.windows)}>
         <img src="/icons/windows.png" alt="gui"/>
         <span>Windows</span>
       </div>
-      <div className={styles.env} onClick={() => props.onSelect('cli')}>
+      <div className={styles.env} onClick={() => props.onSelect(environments.terminal)}>
         <img src="/icons/terminal.png" alt="cli" />
         <span>Terminal</span>
       </div>

@@ -32,5 +32,12 @@
 .folder .folder-name {
     font-size: 12px;
     text-align: center;
-    text-shadow: 0 0 4px black;
+}
+
+.primary-color {
+    color: var(--primary-color);
+}
+
+.folder-color {
+    color: #00a0ff;
 }

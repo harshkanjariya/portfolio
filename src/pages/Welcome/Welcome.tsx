@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import Header from "../../components/Header/Header";
-import styles from './Welcome.module.scss';
 import Typing from "../../components/Welcome/Typing/Typing";
 import EnvironmentSelection from "../../components/Welcome/EnvironmentSelection/EnvironmentSelection";
-import {setEnvironment} from "../../utils/ui";
 import {useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../../core/router";
+import {environments} from "../../utils/constants";
+import {getCurrentEnvironment} from "../../utils/ui";
 
 const messageList = [
   'Hello!',
@@ -17,6 +17,17 @@ const messageList = [
 function Welcome() {
   const navigate = useNavigate();
   const location = useLocation();
+  const env = getCurrentEnvironment();
+
+  useEffect(() => {
+    if (!location.hash.length) {
+      if (env == environments.windows) {
+        navigate(routes.windows);
+      } else if (env === environments.terminal) {
+        navigate(routes.terminal);
+      }
+    }
+  }, []);
 
   let CenterComponent;
   if (location.hash === '') {
@@ -31,8 +42,7 @@ function Welcome() {
     />;
   } else if (location.hash == '#environments') {
     CenterComponent = <EnvironmentSelection onSelect={(selectedEnv) => {
-      setEnvironment(selectedEnv);
-      if (selectedEnv == 'gui') {
+      if (selectedEnv == environments.windows) {
         navigate('/#typing', {
           state: {
             navigate: routes.windows,
@@ -42,7 +52,7 @@ function Welcome() {
       } else {
         navigate('/#typing', {
           state: {
-            navigate: routes.cli,
+            navigate: routes.terminal,
             messageList: ['Here\'s my life,\n if it was a terminal.'],
           }
         })

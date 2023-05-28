@@ -3,7 +3,7 @@ import Folder, {FolderProps} from "../../components/Folder/Folder";
 import {useState} from "react";
 import PathView from "../../components/PathView/PathView";
 import {Dialog, DialogTitle, DialogContent, DialogActions, Button} from '@mui/material';
-import { Close } from '@mui/icons-material';
+import {ArrowLeft, ChevronLeft, Close} from '@mui/icons-material';
 import {FileInfo, FolderStructure, Path} from "../../utils/types";
 
 const fs: FolderStructure = require('../../assets/data/fs.json');
@@ -16,6 +16,10 @@ function FileExplorer() {
   const navigateTo = (path: Path) => {
     setPath((prevPath) => [...prevPath, path]);
   };
+
+  function navigateBack() {
+    setPath(path.slice(0, path.length - 1));
+  }
 
   const handlePathClick = (index: number) => {
     const newPath = path.slice(0, index + 1);
@@ -43,11 +47,14 @@ function FileExplorer() {
 
   return (
     <div className={'full-page ' + styles.fileExplorer}>
-      <PathView
-        path={path}
-        onPathClick={handlePathClick}
-        className={styles.pathContainer}
-      />
+      <div className={styles.header}>
+        {!path.length ? null : <ChevronLeft onClick={() => navigateBack()}/>}
+        <PathView
+          path={path}
+          onPathClick={handlePathClick}
+          className={styles.pathContainer}
+        />
+      </div>
       <Close
         style={{ position: 'absolute', right: 20, top: 20 }}
         onClick={() => window.history.back()}

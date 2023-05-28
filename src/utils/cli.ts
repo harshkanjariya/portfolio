@@ -1,7 +1,12 @@
 import {useState} from "react";
 import {FolderStructure, Path} from "./types";
+import {useNavigate} from "react-router-dom";
+import {routes} from "../core/router";
 
 const commandManuel: any = {
+  help: {
+    description: 'To print command help menu'
+  },
   ls: {
     description: 'Used to list files in current folder',
   },
@@ -10,21 +15,35 @@ const commandManuel: any = {
   },
   clear: {
     description: 'Clear output screen'
+  },
+  open: {
+    description: 'Open file or execute special files',
   }
 };
 
 const tab = '&nbsp;&nbsp;&nbsp;&nbsp;';
-const fs = require('../assets/data/fs.json');
+
+const genericFs = require('../assets/data/fs.json');
+const terminalFs = require('../assets/data/terminal.json');
+const fs = {
+  ...genericFs,
+  ...terminalFs,
+}
 
 export function useCli() {
   const [currentPath, setCurrentPath] = useState([] as Path[]);
   const [stdout, setStdout] = useState([] as string[]);
+  const navigate = useNavigate();
 
   function helpMenu() {
-    let s = '';
+    let s = '<table>';
     for (const c of Object.keys(commandManuel)) {
-      s += `${tab + c + tab + tab}` + commandManuel[c].description + '<br/>';
+      s += '<tr>';
+      s += `<td>${tab + c}</td>`;
+      s += `<td>${tab + commandManuel[c].description}</td>`;
+      s += '</tr>';
     }
+    s += '</table>';
     return s;
   }
 
@@ -32,7 +51,8 @@ export function useCli() {
     const currentFolder = getCurrentFolder();
     let list = '';
     for (const o of Object.keys(currentFolder)) {
-      list += o + '<br/>';
+      const className = currentFolder[o].isDir ? 'folder-color' : '';
+      list += `<span class="${className}">${o}</span><br/>`;
     }
     return list;
   }
@@ -47,15 +67,20 @@ export function useCli() {
 
   function runCommand(fullCommand: string) {
     if (!fullCommand.trim().length) return 200;
-    const [command, ...args] = fullCommand.split(' ');
+    const [command, ...args] = fullCommand.trim().split(/\s+/g);
     if (!commandManuel[command]) {
-      return `Invalid command: ${command} <br/>
+      return `Invalid command: ${command} <br/><br/>
             Here are some basic commands: <br/>
-            ` + helpMenu();
+            ${helpMenu()} <br />`;
     } else {
       switch (command) {
         case 'ls':
           return getFolderList();
+        case 'help':
+          return `
+            Basic commands supported to this terminal :<br />
+            <br />${helpMenu()} <br />
+          `;
         case 'cd':
           if (args[0] == '..') {
             currentPath.splice(currentPath.length - 1, 1);
@@ -63,7 +88,7 @@ export function useCli() {
             return 200;
           }
           const currentFolder = getCurrentFolder();
-          if (!currentFolder[args[0]]) {
+          if (!currentFolder[args[0]] || !currentFolder[args[0]].isDir) {
             return `Folder not found, Name: ${args[0]}`;
           } else {
             setCurrentPath([...currentPath, {
@@ -72,6 +97,11 @@ export function useCli() {
             }]);
             return 200;
           }
+        case 'open':
+          if (args[0] == 'windows') {
+            navigate(routes.windows);
+          }
+          return 200;
         case 'clear':
           setStdout([]);
       }
@@ -79,20 +109,64 @@ export function useCli() {
   }
 
   function getCurrentPrompt() {
+    let s;
     if (!currentPath.length) {
-      return '/ >';
+      s = '/ >';
     } else {
-      return currentPath.map((v, i) => `/ ${v.label} `).join('') + ' >';
+      s = currentPath.map((v, i) => `/ ${v.label} `).join('') + ' >'
     }
+    return `<span class="primary-color">${s}</span>`;
+  }
+
+  function getCommandSuggestions(text: string) {
+    if (!text.trim().length) return {
+      suggestions: [],
+      startIndex: -1,
+    };
+    const [command, ...args] = text.trim().split(/\s+/g);
+
+    const suggestions = [];
+    let startIndex = 0;
+    if (!args.length) {
+      startIndex = command.length;
+      for (const c of Object.keys(commandManuel)) {
+        if (c.startsWith(command)) {
+          suggestions.push(c);
+        }
+      }
+    } else {
+      if (commandManuel[command]) {
+        const query = args[0];
+        startIndex = query.length;
+        const currentFolder = getCurrentFolder();
+        if (command == 'cd' || command == 'ls') {
+          for (const c of Object.keys(currentFolder)) {
+            if (currentFolder[c].isDir && c.startsWith(query)) {
+              suggestions.push(c);
+            }
+          }
+        } else if (command == 'open') {
+          const currentFolder = getCurrentFolder();
+          for (const c of Object.keys(currentFolder)) {
+            if (!currentFolder[c].isDir && c.startsWith(query)) {
+              suggestions.push(c);
+            }
+          }
+        }
+      }
+    }
+    return {startIndex, suggestions};
   }
 
   function execute(command: string) {
-    const newOut = [...stdout];
-    newOut.push(getCurrentPrompt() + ' ' + command);
+    const newOut = [
+      getCurrentPrompt() + ' ' + command,
+      ...stdout,
+    ];
     const result = runCommand(command);
     if (result) {
       if (typeof result === "string") {
-        newOut.push(result);
+        newOut.unshift(result);
       }
       setStdout(newOut);
     }
@@ -104,5 +178,6 @@ export function useCli() {
     setStdout,
     execute,
     getCurrentPrompt,
+    getCommandSuggestions,
   }
 }

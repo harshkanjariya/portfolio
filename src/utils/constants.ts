@@ -3,6 +3,11 @@ const storageKeys = {
   ENV: 'environment',
 };
 
+const environments = {
+  windows: 'windows',
+  terminal: 'terminal',
+}
+
 const themes = {
   light: 'light',
   dark: 'dark',
@@ -11,4 +16,5 @@ const themes = {
 export {
   storageKeys,
   themes,
+  environments,
 };

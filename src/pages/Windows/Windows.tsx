@@ -20,7 +20,17 @@ function Windows() {
       <BaseFolder
         name={'Settings'}
         image={'/icons/settings.png'}
-        onOpen={() => navigate(routes.files)}
+        onOpen={() => navigate(routes.settings)}
+      />
+      <BaseFolder
+        name={'Email'}
+        image={'/icons/email.png'}
+        onOpen={() => navigate(routes.contact)}
+      />
+      <BaseFolder
+        name={'Terminal'}
+        image={'/icons/terminal.png'}
+        onOpen={() => navigate(routes.terminal)}
       />
     </div>
   </div>

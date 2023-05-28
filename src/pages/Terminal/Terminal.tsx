@@ -1,6 +1,6 @@
 import styles from './Terminal.module.scss';
 import Typewriter from "typing-animation-react";
-import {useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {TypewriterHandlers} from "typing-animation-react/stories/Typewriter/Typewriter";
 import {useCli} from "../../utils/cli";
 
@@ -12,6 +12,7 @@ function Terminal() {
     getCurrentPrompt,
     execute,
     setStdout,
+    getCommandSuggestions,
   } = useCli();
   const writer = useRef<TypewriterHandlers>({} as TypewriterHandlers);
   const [isAnimEnded, setIsAnimEnded] = useState(false);
@@ -22,6 +23,12 @@ function Terminal() {
       writer.current.write(message);
   }, []);
 
+  useLayoutEffect(() => {
+    if (isAnimEnded) {
+      stdin.current.focus();
+    }
+  }, [isAnimEnded]);
+
   const Stdin = <input
     ref={stdin}
     className={styles.stdin}
@@ -31,10 +38,22 @@ function Terminal() {
         execute(e.currentTarget.value);
         e.currentTarget.value = '';
       }
+      if (e.key == 'Tab') {
+        e.preventDefault();
+        const {startIndex, suggestions} = getCommandSuggestions(e.currentTarget.value);
+        if (suggestions.length == 1) {
+          e.currentTarget.value += suggestions[0].substring(startIndex);
+        }
+      } else {
+        console.log('Terminal.tsx > 34', e.key);
+      }
     }}
     aria-multiline={false}
   />;
-  let PathToShow: any = <>{getCurrentPrompt()}&nbsp;{Stdin}</>;
+  let PathToShow: any = <div>
+    <span dangerouslySetInnerHTML={{__html: getCurrentPrompt()}}/>
+    &nbsp;{Stdin}
+  </div>;
 
   let FirstMessage;
   if (!isAnimEnded) {
@@ -56,10 +75,12 @@ function Terminal() {
     onClick={() => stdin.current.focus && stdin.current?.focus()}
   >
     {FirstMessage}
-    {stdout.map((o, i) => <div key={i} dangerouslySetInnerHTML={{__html: o}} />)}
-    <span className={styles.promptRow}>
-      {PathToShow}
-    </span>
+    <div className={styles.terminalBody}>
+      <span className={styles.promptRow}>
+        {PathToShow}
+      </span>
+      {stdout.map((o, i) => <div key={i} dangerouslySetInnerHTML={{__html: o}}/>)}
+    </div>
   </div>
 }
 
