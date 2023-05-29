@@ -23,7 +23,7 @@ function Windows() {
         onOpen={() => navigate(routes.settings)}
       />
       <BaseFolder
-        name={'Email'}
+        name={'Contact'}
         image={'/icons/email.png'}
         onOpen={() => navigate(routes.contact)}
       />
