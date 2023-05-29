@@ -17,3 +17,8 @@ export interface FileInfo {
 export interface FolderStructure {
   [key: string]: FolderProps & { children: FolderStructure } & FileInfo;
 }
+
+export interface Position {
+  x: number;
+  y: number;
+}
