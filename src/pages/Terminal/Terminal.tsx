@@ -44,8 +44,6 @@ function Terminal() {
         if (suggestions.length == 1) {
           e.currentTarget.value += suggestions[0].substring(startIndex);
         }
-      } else {
-        console.log('Terminal.tsx > 34', e.key);
       }
     }}
     aria-multiline={false}
