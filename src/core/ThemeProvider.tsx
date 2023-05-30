@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
-import {getCurrentTheme, toggleDarkTheme} from "../utils/ui";
-import {createTheme, ThemeProvider as MaterialThemeProvider} from "@mui/material";
+import React, {useContext, useState} from 'react';
+import {getCurrentTheme, toggleDarkTheme} from '../utils/ui';
+import {createTheme, ThemeProvider as MaterialThemeProvider} from '@mui/material';
 
 interface IThemeContext {
   currentTheme: string,
@@ -29,11 +29,11 @@ function ThemeProvider(props: any) {
     <MaterialThemeProvider theme={materialTheme}>
       {props.children}
     </MaterialThemeProvider>
-  </ThemeContext.Provider>
+  </ThemeContext.Provider>;
 }
 
 export function useTheme() {
-  return useContext(ThemeContext)
+  return useContext(ThemeContext);
 }
 
 export default ThemeProvider;

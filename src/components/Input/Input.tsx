@@ -1,5 +1,6 @@
+import React from 'react';
 import styles from './Input.module.scss';
-import {FormEvent} from "react";
+import {FormEvent} from 'react';
 
 export interface InputProps {
   value?: string;
@@ -17,15 +18,15 @@ function Input(props: InputProps) {
     defaultValue: props.value,
     onChange: (e: FormEvent<HTMLInputElement>) => {
       if (props.onChange)
-        props.onChange(e.currentTarget.value)
+        props.onChange(e.currentTarget.value);
     },
-  }
-  return <input {...args}/>
+  };
+  return <input {...args}/>;
 }
 
 Input.defaultProps = {
   type: 'text',
-  onChange: () => {},
-}
+  onChange: undefined,
+};
 
 export default Input;

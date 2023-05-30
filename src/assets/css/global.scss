@@ -1,68 +1,74 @@
 .page-body {
-    min-height: calc(100vh - var(--header-height) - 40px);
-    margin-top: var(--header-height);
-    padding: 20px;
-    height: 100%;
-    position: relative;
+  min-height: calc(100vh - var(--header-height) - 40px);
+  margin-top: var(--header-height);
+  padding: 20px;
+  height: 100%;
+  position: relative;
 }
 
 .full-page {
-    width: calc(100vw - 40px);
-    height: calc(100vh - 40px);
-    padding: 20px;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 40px);
+  padding: 20px;
 }
 
 .folder {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    cursor: pointer;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .folder img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 5px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+.folder.rounded img {
+  border-radius: 50%;
+}
+.folder.with-background img {
+  background-color: var(--background-color);
 }
 
 .folder .folder-name {
-    font-size: 12px;
-    text-align: center;
+  font-size: 12px;
+  text-align: center;
 }
 
 .primary-color {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .folder-color {
-    color: #00a0ff;
+  color: #00a0ff;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .flex-col {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background-color: var(--background-secondary-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: var(--background-secondary-color);
 }
 
 .mb-10 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }

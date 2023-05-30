@@ -1,8 +1,8 @@
-import React from "react";
-import {DarkMode, LightMode} from "@mui/icons-material";
+import React from 'react';
+import {DarkMode, LightMode} from '@mui/icons-material';
 import styles from './ThemeButton.module.css';
-import {themes} from "../../utils/constants";
-import {useTheme} from "../../core/ThemeProvider";
+import {themes} from '../../utils/constants';
+import {useTheme} from '../../core/ThemeProvider';
 
 function ThemeButton() {
   const {currentTheme, toggleTheme} = useTheme();

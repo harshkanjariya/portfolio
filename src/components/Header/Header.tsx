@@ -1,5 +1,6 @@
+import React from 'react';
 import styles from './Header.module.scss';
-import ThemeButton from "../ThemeButton/ThemeButton";
+import ThemeButton from '../ThemeButton/ThemeButton';
 
 function Header() {
   return <div className={styles.header}>
@@ -7,7 +8,7 @@ function Header() {
     <div className={styles.themeButton}>
       <ThemeButton />
     </div>
-  </div>
+  </div>;
 }
 
 export default Header;

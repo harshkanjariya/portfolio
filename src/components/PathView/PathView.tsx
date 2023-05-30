@@ -1,5 +1,6 @@
+import React from 'react';
 import styles from './PathView.module.scss';
-import {Path} from "../../utils/types";
+import {Path} from '../../utils/types';
 
 export interface PathViewProps {
   className?: string,
@@ -8,7 +9,7 @@ export interface PathViewProps {
 }
 
 function PathView(props: PathViewProps) {
-  let Elements = [];
+  const Elements = [];
   for (let i = 0; i < props.path.length; i++) {
     if (i > 0) {
       Elements.push(<span style={{padding: 5}}>/</span>);
@@ -25,7 +26,7 @@ function PathView(props: PathViewProps) {
       className={styles.clickablePath}
       onClick={() => props.onPathClick(-1)}>/</span>
     {Elements}
-  </div>
+  </div>;
 }
 
 export default PathView;

@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './assets/css/global.scss';
 import reportWebVitals from './reportWebVitals';
-import {RouterProvider} from "react-router-dom";
-import {router} from "./core/router";
-import {init} from "./utils/controllers";
-import ThemeProvider from "./core/ThemeProvider";
+import {RouterProvider} from 'react-router-dom';
+import {router} from './core/router';
+import {init} from './utils/controllers';
+import ThemeProvider from './core/ThemeProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

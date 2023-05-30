@@ -1,5 +1,5 @@
-import {getStorageData, setStorageData} from "./storage";
-import {storageKeys, themes} from "./constants";
+import {getStorageData, setStorageData} from './storage';
+import {storageKeys, themes} from './constants';
 
 export function getCurrentEnvironment() {
   return getStorageData(storageKeys.ENV);

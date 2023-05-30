@@ -1,11 +1,12 @@
-import {createBrowserRouter} from "react-router-dom";
-import Welcome from "../pages/Welcome/Welcome";
-import Header from "../components/Header/Header";
-import Terminal from "../pages/Terminal/Terminal";
-import Windows from "../pages/Windows/Windows";
-import FileExplorer from "../pages/FileExplorer/FileExplorer";
-import Settings from "../pages/Settings/Settings";
-import Contact from "../pages/Contact/Contact";
+import React from 'react';
+import {createBrowserRouter} from 'react-router-dom';
+import Welcome from '../pages/Welcome/Welcome';
+import Header from '../components/Header/Header';
+import Terminal from '../pages/Terminal/Terminal';
+import Windows from '../pages/Windows/Windows';
+import FileExplorer from '../pages/FileExplorer/FileExplorer';
+import Settings from '../pages/Settings/Settings';
+import Contact from '../pages/Contact/Contact';
 
 export const routes = {
   windows: '/windows',

@@ -7,7 +7,9 @@ export function getStorageData(key: string) {
   if (data) {
     try {
       data = JSON.parse(data);
-    } catch (e) {}
+    } catch (e) {
+      console.log('error parsing data', e);
+    }
   }
   return data;
 }

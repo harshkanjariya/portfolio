@@ -6,12 +6,12 @@ const storageKeys = {
 const environments = {
   windows: 'windows',
   terminal: 'terminal',
-}
+};
 
 const themes = {
   light: 'light',
   dark: 'dark',
-}
+};
 
 export {
   storageKeys,

@@ -1,6 +1,7 @@
+import React from 'react';
 import styles from './ContextMenu.module.scss';
-import {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import {Position} from "../../utils/types";
+import {forwardRef, useImperativeHandle, useState} from 'react';
+import {Position} from '../../utils/types';
 
 export interface ContextMenuProps {
   options: string[],

@@ -1,6 +1,7 @@
-import {Switch} from "@mui/material";
-import {getCurrentEnvironment, setEnvironment} from "../../utils/ui";
-import {environments} from "../../utils/constants";
+import React from 'react';
+import {Switch} from '@mui/material';
+import {getCurrentEnvironment, setEnvironment} from '../../utils/ui';
+import {environments} from '../../utils/constants';
 
 function Settings() {
   const env = getCurrentEnvironment();
