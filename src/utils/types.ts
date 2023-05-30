@@ -1,4 +1,4 @@
-import {FolderProps} from "../components/Folder/Folder";
+import {FolderProps} from '../components/Folder/Folder';
 
 export interface Path {
   value: string;
@@ -14,8 +14,12 @@ export interface FileInfo {
   };
 }
 
-export interface FolderStructure {
-  [key: string]: FolderProps & { children: FolderStructure } & FileInfo;
+export interface FolderStructure extends FileInfo {
+  name?: string;
+  isDir: boolean;
+  children?: {
+    [key: string]: FolderStructure
+  }
 }
 
 export interface Position {

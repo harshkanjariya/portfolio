@@ -1,12 +1,17 @@
+import React, {useState} from 'react';
 import styles from './FileExplorer.module.scss';
-import Folder, {FolderProps} from "../../components/Folder/Folder";
-import {useState} from "react";
-import PathView from "../../components/PathView/PathView";
-import {Dialog, DialogTitle, DialogContent, DialogActions, Button} from '@mui/material';
-import {ArrowLeft, ChevronLeft, Close} from '@mui/icons-material';
-import {FileInfo, FolderStructure, Path} from "../../utils/types";
+import Folder from '../../components/Folder/Folder';
+import PathView from '../../components/PathView/PathView';
+import {Dialog, DialogContent, DialogTitle} from '@mui/material';
+import {ChevronLeft, Close} from '@mui/icons-material';
+import {FileInfo, FolderStructure, Path} from '../../utils/types';
+import genericFs from '../../assets/data/fs.json';
+import {getCurrentFolder} from '../../utils/functions';
 
-const fs: FolderStructure = require('../../assets/data/fs.json');
+const fs: FolderStructure = {
+  isDir: true,
+  children: genericFs,
+};
 
 function FileExplorer() {
   const [path, setPath] = useState<Path[]>([]);
@@ -26,24 +31,19 @@ function FileExplorer() {
     setPath(newPath);
   };
 
-  const getCurrentFolder = () => {
-    let currentFolder: FolderStructure = fs;
-    for (let i = 0; i < path.length; i++) {
-      currentFolder = currentFolder[path[i].value].children;
-    }
-    return currentFolder;
-  };
-
-  function handleFolderClick(key: string, data: FolderProps & FileInfo) {
+  function handleFolderClick(
+    key: string,
+    data: { name?: string, isDir: boolean } & FileInfo
+  ) {
     if (data.isDir) {
-      navigateTo({value: key, label: data.name})
+      navigateTo({value: key, label: data.name || key});
     } else {
       setIsDialogOpen(true);
       setDialogContent(data);
     }
   }
 
-  const currentFolder: FolderStructure = getCurrentFolder();
+  const currentFolder: { [key: string]: FolderStructure } = getCurrentFolder(fs, path).children || {};
 
   return (
     <div className={'full-page ' + styles.fileExplorer}>
@@ -56,7 +56,7 @@ function FileExplorer() {
         />
       </div>
       <Close
-        style={{ position: 'absolute', right: 20, top: 20 }}
+        style={{position: 'absolute', right: 20, top: 20}}
         onClick={() => window.history.back()}
       />
       <div className={styles.folderList}>
@@ -65,7 +65,7 @@ function FileExplorer() {
           return (
             <Folder
               key={key}
-              name={data.name}
+              name={data.name || ''}
               isDir={data.isDir}
               onOpen={() => handleFolderClick(key, data)}
             />
@@ -74,7 +74,7 @@ function FileExplorer() {
       </div>
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <Close
-          style={{ position: 'absolute', right: 20, top: 20 }}
+          style={{position: 'absolute', right: 20, top: 20}}
           onClick={() => setIsDialogOpen(false)}
         />
         <DialogTitle>File Details</DialogTitle>

@@ -1,7 +1,43 @@
-import {useState} from "react";
-import {FolderStructure, Path} from "./types";
-import {useNavigate} from "react-router-dom";
-import {routes} from "../core/router";
+import {useEffect, useState} from 'react';
+import {FolderStructure, Path} from './types';
+import {useNavigate} from 'react-router-dom';
+import {routes} from '../core/router';
+import genericFs from '../assets/data/fs.json';
+import terminalFs from '../assets/data/terminal.json';
+import appsFs from '../assets/data/apps.json';
+import {getCurrentFolder} from './functions';
+
+const fs: FolderStructure = {
+  isDir: true,
+  children: {
+    home: {
+      isDir: true,
+      name: 'Home',
+      children: genericFs,
+    },
+    apps: {
+      isDir: true,
+      name: 'Applications',
+      children: appsFs,
+    },
+    ...terminalFs,
+  }
+};
+
+function setupFsRecursive(obj: any, parent: any) {
+  if (obj.isDir) {
+    if (!obj.children) obj.children = {};
+    obj.children['.'] = {...obj};
+    if (parent) {
+      obj.children['..'] = {...parent};
+    }
+    for (const child of Object.keys(obj.children)) {
+      if (child != '.' && child != '..') {
+        setupFsRecursive(obj.children[child], obj);
+      }
+    }
+  }
+}
 
 const commandManuel: any = {
   help: {
@@ -23,17 +59,14 @@ const commandManuel: any = {
 
 const tab = '&nbsp;&nbsp;&nbsp;&nbsp;';
 
-const genericFs = require('../assets/data/fs.json');
-const terminalFs = require('../assets/data/terminal.json');
-const fs = {
-  ...genericFs,
-  ...terminalFs,
-}
-
 export function useCli() {
   const [currentPath, setCurrentPath] = useState([] as Path[]);
   const [stdout, setStdout] = useState([] as string[]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setupFsRecursive(fs, undefined);
+  }, []);
 
   function helpMenu() {
     let s = '<table>';
@@ -48,22 +81,52 @@ export function useCli() {
   }
 
   function getFolderList() {
-    const currentFolder = getCurrentFolder();
+    const currentFolder = getCurrentFolder(fs, currentPath);
     let list = '';
-    for (const o of Object.keys(currentFolder)) {
-      const className = currentFolder[o].isDir ? 'folder-color' : '';
-      list += `<span class="${className}">${o}</span><br/>`;
-    }
+    if (currentFolder.children)
+      for (const o of Object.keys(currentFolder.children)) {
+        if (o == '.' || o == '..') continue;
+        const className = currentFolder.children[o].isDir ? 'folder-color' : '';
+        list += `<span class="${className}">${o}</span><br/>`;
+      }
     return list;
   }
 
-  const getCurrentFolder = () => {
-    let currentFolder: FolderStructure = fs;
-    for (let i = 0; i < currentPath.length; i++) {
-      currentFolder = currentFolder[currentPath[i].value].children;
+  function resolvePath(path: string) {
+    path = path.trim();
+    const parts = path.split('/');
+
+    const isAbsolute = path.startsWith('/');
+    let cur = isAbsolute ? fs : getCurrentFolder(fs, currentPath);
+
+    if (isAbsolute) parts.splice(0, 1);
+
+    const newPath = isAbsolute ? [] : [...currentPath];
+
+    for (const p of parts) {
+      if (cur.children && cur.children[p]) {
+        cur = cur.children[p];
+        newPath.push({
+          value: p,
+          label: p,
+        });
+      } else {
+        throw new Error('Invalid folder: ' + path);
+      }
     }
-    return currentFolder;
-  };
+    let i = 0;
+    while (i < newPath.length - 1) {
+      if (newPath[i + 1].value == '..') {
+        newPath.splice(i, 2);
+        if (i > 0) i--;
+      } else if (newPath[i].value == '.') {
+        newPath.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
+    return newPath;
+  }
 
   function runCommand(fullCommand: string) {
     if (!fullCommand.trim().length) return 200;
@@ -82,20 +145,11 @@ export function useCli() {
             <br />${helpMenu()} <br />
           `;
         case 'cd':
-          if (args[0] == '..') {
-            currentPath.splice(currentPath.length - 1, 1);
-            setCurrentPath([...currentPath]);
+          try {
+            setCurrentPath(resolvePath(args[0]));
             return 200;
-          }
-          const currentFolder = getCurrentFolder();
-          if (!currentFolder[args[0]] || !currentFolder[args[0]].isDir) {
-            return `Folder not found, Name: ${args[0]}`;
-          } else {
-            setCurrentPath([...currentPath, {
-              value: args[0],
-              label: args[0],
-            }]);
-            return 200;
+          } catch (e: any) {
+            return e.message;
           }
         case 'open':
           if (args[0] == 'windows') {
@@ -113,7 +167,7 @@ export function useCli() {
     if (!currentPath.length) {
       s = '/ >';
     } else {
-      s = currentPath.map((v, i) => `/ ${v.label} `).join('') + ' >'
+      s = currentPath.map((v) => `/ ${v.label} `).join('') + ' >';
     }
     return `<span class="primary-color">${s}</span>`;
   }
@@ -138,20 +192,22 @@ export function useCli() {
       if (commandManuel[command]) {
         const query = args[0];
         startIndex = query.length;
-        const currentFolder = getCurrentFolder();
+        const currentFolder = getCurrentFolder(fs, currentPath);
         if (command == 'cd' || command == 'ls') {
-          for (const c of Object.keys(currentFolder)) {
-            if (currentFolder[c].isDir && c.startsWith(query)) {
-              suggestions.push(c);
+          if (currentFolder.children)
+            for (const c of Object.keys(currentFolder.children)) {
+              if (currentFolder.children[c].isDir && c.startsWith(query)) {
+                suggestions.push(c);
+              }
             }
-          }
         } else if (command == 'open') {
-          const currentFolder = getCurrentFolder();
-          for (const c of Object.keys(currentFolder)) {
-            if (!currentFolder[c].isDir && c.startsWith(query)) {
-              suggestions.push(c);
+          const currentFolder = getCurrentFolder(fs, currentPath);
+          if (currentFolder.children)
+            for (const c of Object.keys(currentFolder.children)) {
+              if (!currentFolder.children[c].isDir && c.startsWith(query)) {
+                suggestions.push(c);
+              }
             }
-          }
         }
       }
     }
@@ -165,7 +221,7 @@ export function useCli() {
     ];
     const result = runCommand(command);
     if (result) {
-      if (typeof result === "string") {
+      if (typeof result === 'string') {
         newOut.unshift(result);
       }
       setStdout(newOut);
@@ -179,5 +235,5 @@ export function useCli() {
     execute,
     getCurrentPrompt,
     getCommandSuggestions,
-  }
+  };
 }

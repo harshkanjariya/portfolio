@@ -1,8 +1,8 @@
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import styles from './Terminal.module.scss';
-import Typewriter from "typing-animation-react";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {TypewriterHandlers} from "typing-animation-react/stories/Typewriter/Typewriter";
-import {useCli} from "../../utils/cli";
+import Typewriter from 'typing-animation-react';
+import {TypewriterHandlers} from 'typing-animation-react/stories/Typewriter/Typewriter';
+import {useCli} from '../../utils/cli';
 
 const message = 'Welcome to cli interface of portfolio!';
 
@@ -63,7 +63,7 @@ function Terminal() {
       onAnimationEnd={() => setTimeout(() => {
         setIsAnimEnded(true);
         setStdout([message]);
-      }, 500)}/>
+      }, 500)}/>;
   } else {
     FirstMessage = null;
   }
@@ -79,7 +79,7 @@ function Terminal() {
       </span>
       {stdout.map((o, i) => <div key={i} dangerouslySetInnerHTML={{__html: o}}/>)}
     </div>
-  </div>
+  </div>;
 }
 
 export default Terminal;
