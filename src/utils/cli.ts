@@ -94,12 +94,10 @@ export function useCli() {
 
   function resolvePath(path: string) {
     path = path.trim();
-    const parts = path.split('/');
+    const parts = path.split('/').filter(Boolean);
 
     const isAbsolute = path.startsWith('/');
     let cur = isAbsolute ? fs : getCurrentFolder(fs, currentPath);
-
-    if (isAbsolute) parts.splice(0, 1);
 
     const newPath = isAbsolute ? [] : [...currentPath];
 
