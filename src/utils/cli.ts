@@ -102,7 +102,7 @@ export function useCli() {
     const newPath = isAbsolute ? [] : [...currentPath];
 
     for (const p of parts) {
-      if (cur.children && cur.children[p]) {
+      if (cur.children && cur.children[p] && cur.children[p].isDir) {
         cur = cur.children[p];
         newPath.push({
           value: p,
