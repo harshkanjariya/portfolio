@@ -1,4 +1,4 @@
-import {handleEnterClick} from "./keyboardEvents";
+import {handleEnterClick, handleKeyboardClick} from './keyboardEvents';
 
 export function init() {
   handleKeyEvents();
@@ -6,6 +6,7 @@ export function init() {
 
 function handleKeyEvents() {
   document.addEventListener('keydown', (e) => {
+    handleKeyboardClick(e);
     switch (e.key) {
       case 'Enter':
         handleEnterClick();

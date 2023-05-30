@@ -1,17 +1,20 @@
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import styles from './Terminal.module.scss';
 import Typewriter from 'typing-animation-react';
 import {TypewriterHandlers} from 'typing-animation-react/stories/Typewriter/Typewriter';
 import {useCli} from '../../utils/cli';
+import {addKeyCallback, removeKeyCallback} from '../../utils/keyboardEvents';
 
 const message = 'Welcome to cli interface of portfolio!';
 
 function Terminal() {
   const {
     stdout,
+    setStdout,
+    links, openSelectedLink,
+    selection, setSelection,
     getCurrentPrompt,
     execute,
-    setStdout,
     getCommandSuggestions,
   } = useCli();
   const writer = useRef<TypewriterHandlers>({} as TypewriterHandlers);
@@ -24,7 +27,7 @@ function Terminal() {
   }, []);
 
   useLayoutEffect(() => {
-    if (isAnimEnded) {
+    if (isAnimEnded && stdin.current) {
       stdin.current.focus();
     }
   }, [isAnimEnded]);
@@ -35,6 +38,7 @@ function Terminal() {
     type="text"
     onKeyDown={(e) => {
       if (e.key == 'Enter') {
+        e.stopPropagation();
         execute(e.currentTarget.value);
         e.currentTarget.value = '';
       }
@@ -68,15 +72,49 @@ function Terminal() {
     FirstMessage = null;
   }
 
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key == 'ArrowDown') {
+      setSelection((selection) =>
+        Math.min(links.length - 1, selection + 1));
+    } else if (e.key == 'ArrowUp') {
+      setSelection((selection) =>
+        Math.max(0, selection - 1));
+    } else if (e.key == 'Enter' && links.length) {
+      openSelectedLink();
+    }
+  }, [links.length, selection, setSelection]);
+
+  useEffect(() => {
+    addKeyCallback(onKeyDown);
+    return () => {
+      removeKeyCallback(onKeyDown);
+    };
+  }, [onKeyDown]);
+
+  let Links;
+  if (links.length) {
+    Links = <table className={styles.linkContainer}>
+      <tbody>
+      {links.map((link: any, i: number) =>
+        <tr key={i}>
+          <td><input type="radio" readOnly={true} checked={i == selection}/></td>
+          <td>{link.name}</td>
+          <td>{link.value}</td>
+        </tr>
+      )}
+      </tbody>
+    </table>;
+  }
+
   return <div
     className={'page-body ' + styles.terminal}
-    onClick={() => stdin.current.focus && stdin.current?.focus()}
+    onClick={() => stdin.current && stdin.current.focus && stdin.current?.focus()}
   >
     {FirstMessage}
     <div className={styles.terminalBody}>
-      <span className={styles.promptRow}>
+      {Links || <span className={styles.promptRow}>
         {PathToShow}
-      </span>
+      </span>}
       {stdout.map((o, i) => <div key={i} dangerouslySetInnerHTML={{__html: o}}/>)}
     </div>
   </div>;

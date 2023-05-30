@@ -63,6 +63,8 @@ export function useCli() {
   const [currentPath, setCurrentPath] = useState([] as Path[]);
   const [stdout, setStdout] = useState([] as string[]);
   const navigate = useNavigate();
+  const [links, setLinks] = useState([] as any);
+  const [selection, setSelection] = useState(0);
 
   useEffect(() => {
     setupFsRecursive(fs, undefined);
@@ -90,6 +92,35 @@ export function useCli() {
         list += `<span class="${className}">${o}</span><br/>`;
       }
     return list;
+  }
+
+  function openSelectedLink() {
+    if (links.length && selection >=0 && selection <= links.length - 1) {
+      window.open(links[selection].value);
+      setSelection(0);
+      setLinks([]);
+    }
+  }
+
+  function handleFileOpen(name: string) {
+    const current = getCurrentFolder(fs, currentPath);
+    if (!current.children || !current.children[name] || current.children[name].isDir) {
+      throw 'Invalid file: ' + name;
+    } else {
+      const file = current.children[name];
+      if (file.isLink) {
+        const links = file.links || {};
+        const keys = Object.keys(links);
+        if (keys.length == 1) {
+          window.open(links[keys[0]]);
+        } else {
+          setLinks(keys.map((k) => ({
+            name: k,
+            value: links[k],
+          })));
+        }
+      }
+    }
   }
 
   function resolvePath(path: string) {
@@ -152,6 +183,12 @@ export function useCli() {
         case 'open':
           if (args[0] == 'windows') {
             navigate(routes.windows);
+          } else {
+            try {
+              handleFileOpen(args[0]);
+            } catch (e: any) {
+              return e.message;
+            }
           }
           return 200;
         case 'clear':
@@ -230,6 +267,8 @@ export function useCli() {
     currentPath,
     stdout,
     setStdout,
+    links, openSelectedLink,
+    selection, setSelection,
     execute,
     getCurrentPrompt,
     getCommandSuggestions,

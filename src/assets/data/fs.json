@@ -27,12 +27,32 @@
       "maze-generator": {
         "name": "Maze Generator",
         "isDir": false,
-        "details": {
+        "isLink": true,
+        "description": "A fun code written that create random maze everytime.",
+        "links": {
           "github": "https://github.com/harshkanjariya/maze-generator",
-          "preview": "https://harshkanjariya.github.io/maze-generator",
-          "description": "A fun code written that create random maze everytime."
-        },
-        "children": {}
+          "preview": "https://harshkanjariya.github.io/maze-generator"
+        }
+      },
+      "shared-editor": {
+        "name": "Shared Online Editor",
+        "isDir": false,
+        "isLink": true,
+        "description": "An online editor which is synced between two users. Now sharing becomes buttery smooth.",
+        "links": {
+          "github": "https://github.com/harshkanjariya/live-share",
+          "preview": "https://shared-edit.web.app"
+        }
+      },
+      "mock-server": {
+        "name": "Mock Server",
+        "isDir": false,
+        "isLink": true,
+        "description": "Mock n serve is a mock server where you can do the api call verifications by api clients.",
+        "links": {
+          "github": "https://github.com/harshkanjariya/mock-n-serve",
+          "preview": "https://mock-n-serve.onrender.com"
+        }
       }
     }
   },

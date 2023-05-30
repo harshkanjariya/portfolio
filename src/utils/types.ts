@@ -1,22 +1,16 @@
-import {FolderProps} from '../components/Folder/Folder';
-
 export interface Path {
   value: string;
   label: string;
 }
 
 
-export interface FileInfo {
-  details?: {
-    github: string;
-    preview: string;
-    description: string;
-  };
-}
-
-export interface FolderStructure extends FileInfo {
+export interface FolderStructure {
   name?: string;
   isDir: boolean;
+  isLink?: boolean;
+  links?: {
+    [key: string]: string;
+  },
   children?: {
     [key: string]: FolderStructure
   }

@@ -1,9 +1,9 @@
-import {useTheme} from "../../../core/ThemeProvider";
-import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {TypewriterHandlers} from "typing-animation-react/stories/Typewriter/Typewriter";
-import {addEnterCallback, removeEnterCallback} from "../../../utils/keyboardEvents";
-import Typewriter from "typing-animation-react";
-import {themes} from "../../../utils/constants";
+import {useTheme} from '../../../core/ThemeProvider';
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {TypewriterHandlers} from 'typing-animation-react/stories/Typewriter/Typewriter';
+import {addEnterCallback, removeEnterCallback} from '../../../utils/keyboardEvents';
+import Typewriter from 'typing-animation-react';
+import {themes} from '../../../utils/constants';
 import styles from './Typing.module.scss';
 
 export interface TypingProps {
@@ -41,7 +41,7 @@ function Typing({messageList, ...props}: TypingProps) {
     addEnterCallback(onEnter);
     return () => {
       removeEnterCallback(onEnter);
-    }
+    };
   }, [onEnter]);
 
   return <div className={'page-body ' + styles.typing}>
@@ -59,7 +59,7 @@ function Typing({messageList, ...props}: TypingProps) {
       onAnimationEnd={() => setAnimEndTime(Date.now())}
     />
     <div style={{position: 'fixed', right: 0, bottom: 0}}>Press Enter to continue...</div>
-  </div>
+  </div>;
 }
 
 export default Typing;

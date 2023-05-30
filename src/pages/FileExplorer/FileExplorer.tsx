@@ -4,7 +4,7 @@ import Folder from '../../components/Folder/Folder';
 import PathView from '../../components/PathView/PathView';
 import {Dialog, DialogContent, DialogTitle} from '@mui/material';
 import {ChevronLeft, Close} from '@mui/icons-material';
-import {FileInfo, FolderStructure, Path} from '../../utils/types';
+import {FolderStructure, Path} from '../../utils/types';
 import genericFs from '../../assets/data/fs.json';
 import {getCurrentFolder} from '../../utils/functions';
 
@@ -33,7 +33,7 @@ function FileExplorer() {
 
   function handleFolderClick(
     key: string,
-    data: { name?: string, isDir: boolean } & FileInfo
+    data: { name?: string, isDir: boolean }
   ) {
     if (data.isDir) {
       navigateTo({value: key, label: data.name || key});
