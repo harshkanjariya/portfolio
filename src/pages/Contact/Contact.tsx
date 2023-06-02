@@ -2,11 +2,28 @@ import React, {useState} from 'react';
 import styles from './Contact.module.scss';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import {addContact} from '../../api/public';
 
 function Contact() {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [message, setMessage] = useState('');
+
+  async function submit() {
+    try {
+      const response = await addContact({
+        name,
+        contact,
+        message,
+      });
+      console.log('Contact.tsx > 18', response);
+      // setMessage('');
+      // setName('');
+      // setContact('');
+    } catch (e) {
+      console.log('Contact.tsx > 24', e);
+    }
+  }
 
   return <div className={'page-body ' + styles.contactPage}>
     <div className={'card ' + styles.centerDiv}>
@@ -43,9 +60,7 @@ function Contact() {
         />
       </div>
       <div className={styles.footer}>
-        <Button text={'Submit'} onClick={() => {
-          console.log('Contact.tsx > 34', name, contact, message);
-        }}/>
+        <Button text={'Submit'} onClick={submit}/>
       </div>
     </div>
   </div>;

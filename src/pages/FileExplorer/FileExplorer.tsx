@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import styles from './FileExplorer.module.scss';
 import Folder from '../../components/Folder/Folder';
 import PathView from '../../components/PathView/PathView';
-import {Dialog, DialogContent, DialogTitle} from '@mui/material';
 import {ChevronLeft, Close} from '@mui/icons-material';
 import {FolderStructure, Path} from '../../utils/types';
 import genericFs from '../../assets/data/fs.json';
 import {getCurrentFolder} from '../../utils/functions';
+import LinkInfoDialog from '../../components/Dialogs/LinkInfoDialog/LinkInfoDialog';
 
 const fs: FolderStructure = {
   isDir: true,
@@ -72,16 +72,11 @@ function FileExplorer() {
           );
         })}
       </div>
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <Close
-          style={{position: 'absolute', right: 20, top: 20}}
-          onClick={() => setIsDialogOpen(false)}
-        />
-        <DialogTitle>File Details</DialogTitle>
-        <DialogContent>
-          <pre>{JSON.stringify(dialogContent)}</pre>
-        </DialogContent>
-      </Dialog>
+      <LinkInfoDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        data={dialogContent}
+      />
     </div>
   );
 }

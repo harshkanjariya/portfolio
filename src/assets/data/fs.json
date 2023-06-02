@@ -3,22 +3,45 @@
     "name": "Education",
     "isDir": true,
     "children": {
-      "school": {
-        "name": "School",
-        "isDir": true,
-        "children": {
-          "seven": {
-            "name": "7th",
-            "isDir": false
-          }
-        }
+      "b.tech": {
+        "name": "B.Tech",
+        "isDir": false,
+        "isImage": true,
+        "url": ""
       }
     }
   },
   "contribution": {
     "name": "Contribution",
     "isDir": true,
-    "children": {}
+    "children": {
+      "msk-markdown": {
+        "name": "Msk Markdown",
+        "isDir": false,
+        "isLink": true,
+        "icons": {
+          "github": "/icons/github.webp",
+          "preview": "/icons/preview.png"
+        },
+        "links": {
+          "github": "https://github.com/harshkanjariya/maze-generator",
+          "preview": "https://harshkanjariya.github.io/maze-generator"
+        }
+      },
+      "bhai-lang": {
+        "name": "Bhai Lang",
+        "isDir": false,
+        "isLink": true,
+        "icons": {
+          "github": "/icons/github.webp",
+          "preview": "/icons/preview.png"
+        },
+        "links": {
+          "github": "https://github.com/harshkanjariya/maze-generator",
+          "preview": "https://harshkanjariya.github.io/maze-generator"
+        }
+      }
+    }
   },
   "projects": {
     "name": "Projects",
@@ -29,6 +52,10 @@
         "isDir": false,
         "isLink": true,
         "description": "A fun code written that create random maze everytime.",
+        "icons": {
+          "github": "/icons/github.webp",
+          "preview": "/icons/preview.png"
+        },
         "links": {
           "github": "https://github.com/harshkanjariya/maze-generator",
           "preview": "https://harshkanjariya.github.io/maze-generator"
@@ -39,6 +66,10 @@
         "isDir": false,
         "isLink": true,
         "description": "An online editor which is synced between two users. Now sharing becomes buttery smooth.",
+        "icons": {
+          "github": "/icons/github.webp",
+          "preview": "/icons/preview.png"
+        },
         "links": {
           "github": "https://github.com/harshkanjariya/live-share",
           "preview": "https://shared-edit.web.app"
@@ -49,6 +80,10 @@
         "isDir": false,
         "isLink": true,
         "description": "Mock n serve is a mock server where you can do the api call verifications by api clients.",
+        "icons": {
+          "github": "/icons/github.webp",
+          "preview": "/icons/preview.png"
+        },
         "links": {
           "github": "https://github.com/harshkanjariya/mock-n-serve",
           "preview": "https://mock-n-serve.onrender.com"

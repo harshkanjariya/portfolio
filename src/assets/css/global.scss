@@ -22,7 +22,6 @@
   cursor: pointer;
   overflow: hidden;
 }
-
 .folder img {
   width: 50px;
   height: 50px;
@@ -34,18 +33,27 @@
 .folder.with-background img {
   background-color: var(--background-color);
 }
-
 .folder .folder-name {
   font-size: 12px;
   text-align: center;
 }
+.folder-color {
+  color: #00a0ff;
+}
+
+.dialog-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .title {
+    flex: 1;
+    margin-right: 20px;
+  }
+}
 
 .primary-color {
   color: var(--primary-color);
-}
-
-.folder-color {
-  color: #00a0ff;
 }
 
 .flex-row {

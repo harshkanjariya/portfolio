@@ -6,6 +6,7 @@ import genericFs from '../assets/data/fs.json';
 import terminalFs from '../assets/data/terminal.json';
 import appsFs from '../assets/data/apps.json';
 import {getCurrentFolder} from './functions';
+import _ from 'lodash';
 
 const fs: FolderStructure = {
   isDir: true,
@@ -13,12 +14,12 @@ const fs: FolderStructure = {
     home: {
       isDir: true,
       name: 'Home',
-      children: genericFs,
+      children: _.cloneDeep(genericFs),
     },
     apps: {
       isDir: true,
       name: 'Applications',
-      children: appsFs,
+      children: _.cloneDeep(appsFs),
     },
     ...terminalFs,
   }

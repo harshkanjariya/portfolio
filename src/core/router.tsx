@@ -7,6 +7,7 @@ import Windows from '../pages/Windows/Windows';
 import FileExplorer from '../pages/FileExplorer/FileExplorer';
 import Settings from '../pages/Settings/Settings';
 import Contact from '../pages/Contact/Contact';
+import Motherboard from '../pages/Motherboard/Motherboard';
 
 export const routes = {
   windows: '/windows',
@@ -15,6 +16,7 @@ export const routes = {
   home: '/',
   settings: '/settings',
   contact: '/contact',
+  motherboard: '/motherboard',
 };
 
 export const router = createBrowserRouter([
@@ -41,5 +43,9 @@ export const router = createBrowserRouter([
   {
     path: routes.contact,
     element: <><Header/><Contact/></>,
+  },
+  {
+    path: routes.motherboard,
+    element: <Motherboard />
   }
 ]);

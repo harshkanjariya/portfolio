@@ -11,11 +11,12 @@ export interface BasicDialogProps {
 
 function BasicDialog(props: BasicDialogProps) {
   return <Dialog open={props.isOpen} onClose={props.onClose}>
-    <Close
-      style={{position: 'absolute', right: 20, top: 20}}
-      onClick={props.onClose}
-    />
-    <DialogTitle>{props.title}</DialogTitle>
+    <DialogTitle>
+      <div className="dialog-header">
+        <span className="title">{props.title}</span>
+        <Close onClick={props.onClose}/>
+      </div>
+    </DialogTitle>
     <DialogContent>
       {props.children}
     </DialogContent>
