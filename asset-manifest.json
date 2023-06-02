@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "https://harshkanjariya.tech/portfolio/static/css/main.e36da618.css",
-    "main.js": "https://harshkanjariya.tech/portfolio/static/js/main.30733441.js",
+    "main.js": "https://harshkanjariya.tech/portfolio/static/js/main.2984c05e.js",
     "static/js/787.1ed0c42c.chunk.js": "https://harshkanjariya.tech/portfolio/static/js/787.1ed0c42c.chunk.js",
     "static/media/motherboard.png": "https://harshkanjariya.tech/portfolio/static/media/motherboard.f6edbcea3720a82f43a6.png",
     "static/media/windows-background.jpeg": "https://harshkanjariya.tech/portfolio/static/media/windows-background.088719fe83cebf2fb259.jpeg",
     "index.html": "https://harshkanjariya.tech/portfolio/index.html",
     "main.e36da618.css.map": "https://harshkanjariya.tech/portfolio/static/css/main.e36da618.css.map",
-    "main.30733441.js.map": "https://harshkanjariya.tech/portfolio/static/js/main.30733441.js.map",
+    "main.2984c05e.js.map": "https://harshkanjariya.tech/portfolio/static/js/main.2984c05e.js.map",
     "787.1ed0c42c.chunk.js.map": "https://harshkanjariya.tech/portfolio/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e36da618.css",
-    "static/js/main.30733441.js"
+    "static/js/main.2984c05e.js"
   ]
 }
