@@ -1,4 +1,5 @@
 import React from 'react';
+import basePath from '../../utils/basePath';
 
 export interface BaseFolderProps {
   name: string,
@@ -22,7 +23,7 @@ function BaseFolder(props: BaseFolderProps) {
     onClick={props.onOpen}
     onContextMenu={props.onContextMenu}
   >
-    <img src={props.image} alt="folder"/>
+    <img src={basePath + props.image} alt="folder"/>
     <span className="folder-name">{props.name}</span>
   </div>;
 }

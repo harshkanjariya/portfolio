@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './EnvironmentSelection.module.scss';
 import {environments} from '../../../utils/constants';
+import basePath from '../../../utils/basePath';
 
 export interface EnvironmentSelectionProps {
   className?: string,
@@ -13,11 +14,11 @@ function EnvironmentSelection(props: EnvironmentSelectionProps) {
     <div style={{height: 30}}/>
     <div className={styles.envList}>
       <div className={styles.env} onClick={() => props.onSelect(environments.windows)}>
-        <img src="/icons/windows.png" alt="gui"/>
+        <img src={basePath + '/icons/windows.png'} alt="gui"/>
         <span>Windows</span>
       </div>
       <div className={styles.env} onClick={() => props.onSelect(environments.terminal)}>
-        <img src="/icons/terminal.png" alt="cli" />
+        <img src={basePath + '/icons/terminal.png'} alt="cli"/>
         <span>Terminal</span>
       </div>
     </div>

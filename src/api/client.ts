@@ -1,12 +1,19 @@
+import {HttpException} from '../utils/types';
+
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
-function apiCall(method: string, url: string, data?: any, headers?: any) {
+async function apiCall(method: string, url: string, data?: any, headers?: any) {
   const finalUrl = url.startsWith('http') ? url : baseUrl + url;
-  return fetch(finalUrl, {
+  const response = await fetch(finalUrl, {
     body: JSON.stringify(data),
     method,
     headers,
   });
+  if (response.ok) {
+    return response;
+  } else {
+    throw new HttpException(await response.json());
+  }
 }
 
 export async function post(url: string, data: any) {

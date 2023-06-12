@@ -1,16 +1,19 @@
 import React, {useContext, useState} from 'react';
 import {getCurrentTheme, toggleDarkTheme} from '../utils/ui';
 import {createTheme, ThemeProvider as MaterialThemeProvider} from '@mui/material';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {Theme} from '../utils/types';
 
 interface IThemeContext {
-  currentTheme: string,
+  currentTheme: Theme,
   toggleTheme: () => void,
 }
 
 export const ThemeContext = React.createContext<IThemeContext>({} as IThemeContext);
 
 function ThemeProvider(props: any) {
-  const [currentTheme, setCurrentTheme] = useState(getCurrentTheme());
+  const [currentTheme, setCurrentTheme] = useState<Theme>(getCurrentTheme());
 
   function toggleTheme() {
     const newTheme = toggleDarkTheme();
@@ -26,6 +29,7 @@ function ThemeProvider(props: any) {
     currentTheme,
     toggleTheme,
   }}>
+    <ToastContainer/>
     <MaterialThemeProvider theme={materialTheme}>
       {props.children}
     </MaterialThemeProvider>

@@ -15,7 +15,7 @@ function Input(props: InputProps) {
     className: styles.input + ' ' + props.className,
     type: props.type,
     placeholder: props.hint,
-    defaultValue: props.value,
+    value: props.value,
     onChange: (e: FormEvent<HTMLInputElement>) => {
       if (props.onChange)
         props.onChange(e.currentTarget.value);

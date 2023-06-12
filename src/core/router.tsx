@@ -8,6 +8,7 @@ import FileExplorer from '../pages/FileExplorer/FileExplorer';
 import Settings from '../pages/Settings/Settings';
 import Contact from '../pages/Contact/Contact';
 import Motherboard from '../pages/Motherboard/Motherboard';
+import basePath from '../utils/basePath';
 
 export const routes = {
   windows: '/windows',
@@ -48,4 +49,6 @@ export const router = createBrowserRouter([
     path: routes.motherboard,
     element: <Motherboard />
   }
-]);
+], {
+  basename: basePath
+});

@@ -66,6 +66,8 @@ export function useCli() {
   const navigate = useNavigate();
   const [links, setLinks] = useState([] as any);
   const [selection, setSelection] = useState(0);
+  const [historySelection, setHistorySelection] = useState(-1);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
 
   useEffect(() => {
     setupFsRecursive(fs, undefined);
@@ -251,6 +253,7 @@ export function useCli() {
   }
 
   function execute(command: string) {
+    setCommandHistory([command, ...commandHistory]);
     const newOut = [
       getCurrentPrompt() + ' ' + command,
       ...stdout,
@@ -270,6 +273,8 @@ export function useCli() {
     setStdout,
     links, openSelectedLink,
     selection, setSelection,
+    commandHistory, setCommandHistory,
+    historySelection, setHistorySelection,
     execute,
     getCurrentPrompt,
     getCommandSuggestions,

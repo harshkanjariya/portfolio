@@ -1,6 +1,6 @@
 import {post} from './client';
 
-export async function addContact(data: {
+export function addContact(data: {
   name: string,
   contact: string,
   message: string,

@@ -13,6 +13,8 @@ function Terminal() {
     setStdout,
     links, openSelectedLink,
     selection, setSelection,
+    commandHistory,
+    historySelection, setHistorySelection,
     getCurrentPrompt,
     execute,
     getCommandSuggestions,
@@ -20,6 +22,7 @@ function Terminal() {
   const writer = useRef<TypewriterHandlers>({} as TypewriterHandlers);
   const [isAnimEnded, setIsAnimEnded] = useState(false);
   const stdin = useRef<HTMLInputElement>({} as any);
+  const [currentCommandValue, setCurrentCommandValue] = useState('');
 
   useLayoutEffect(() => {
     if (writer.current)
@@ -31,6 +34,31 @@ function Terminal() {
       stdin.current.focus();
     }
   }, [isAnimEnded]);
+
+  useLayoutEffect(() => {
+    if (historySelection >= 0 && commandHistory.length) {
+      stdin.current.value = commandHistory[historySelection];
+    }
+  }, [historySelection, commandHistory]);
+
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key == 'ArrowDown') {
+      setSelection((selection) =>
+        Math.min(links.length - 1, selection + 1));
+    } else if (e.key == 'ArrowUp') {
+      setSelection((selection) =>
+        Math.max(0, selection - 1));
+    } else if (e.key == 'Enter' && links.length) {
+      openSelectedLink();
+    }
+  }, [openSelectedLink, links.length, setSelection]);
+
+  useEffect(() => {
+    addKeyCallback(onKeyDown);
+    return () => {
+      removeKeyCallback(onKeyDown);
+    };
+  }, [onKeyDown]);
 
   const Stdin = <input
     ref={stdin}
@@ -48,6 +76,30 @@ function Terminal() {
         if (suggestions.length == 1) {
           e.currentTarget.value += suggestions[0].substring(startIndex);
         }
+      }
+      if (e.key == 'ArrowUp') {
+        e.stopPropagation();
+        e.preventDefault();
+        if (commandHistory.length) {
+          if (historySelection == -1) {
+            setCurrentCommandValue(e.currentTarget.value);
+          }
+          setHistorySelection(Math.min(
+            historySelection + 1,
+            commandHistory.length - 1
+          ));
+        }
+      } else if (e.key == 'ArrowDown') {
+        e.stopPropagation();
+        e.preventDefault();
+        if (commandHistory.length) {
+          if (historySelection == 0) {
+            e.currentTarget.value = currentCommandValue;
+          }
+          setHistorySelection(Math.max(-1, historySelection - 1));
+        }
+      } else {
+        setHistorySelection(-1);
       }
     }}
     aria-multiline={false}
@@ -71,25 +123,6 @@ function Terminal() {
   } else {
     FirstMessage = null;
   }
-
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key == 'ArrowDown') {
-      setSelection((selection) =>
-        Math.min(links.length - 1, selection + 1));
-    } else if (e.key == 'ArrowUp') {
-      setSelection((selection) =>
-        Math.max(0, selection - 1));
-    } else if (e.key == 'Enter' && links.length) {
-      openSelectedLink();
-    }
-  }, [links.length, selection, setSelection]);
-
-  useEffect(() => {
-    addKeyCallback(onKeyDown);
-    return () => {
-      removeKeyCallback(onKeyDown);
-    };
-  }, [onKeyDown]);
 
   let Links;
   if (links.length) {
