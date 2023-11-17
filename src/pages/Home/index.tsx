@@ -47,7 +47,7 @@ const Home: React.FC<PageProps> = (
             </div>
             <div className="social-links">
                 <HoverBox
-                    src="/images/gmail.png"
+                    src="/portfolio/images/gmail.png"
                     alt="logo"
                     size={60}
                     leftColor="#404040"
@@ -57,7 +57,7 @@ const Home: React.FC<PageProps> = (
                     target="_blank"
                 />
                 <HoverBox
-                    src="/images/instagram.jpeg"
+                    src="/portfolio/images/instagram.jpeg"
                     alt="logo"
                     size={60}
                     leftColor="#404040"
@@ -69,7 +69,7 @@ const Home: React.FC<PageProps> = (
             </div>
             <div className="code-links">
                 <HoverBox
-                    src="/images/github.png"
+                    src="/portfolio/images/github.png"
                     alt="logo"
                     size={60}
                     leftColor="#404040"
@@ -79,7 +79,7 @@ const Home: React.FC<PageProps> = (
                     target="_blank"
                 />
                 <HoverBox
-                    src="/images/stackoverflow.png"
+                    src="/portfolio/images/stackoverflow.png"
                     alt="logo"
                     size={60}
                     leftColor="#404040"

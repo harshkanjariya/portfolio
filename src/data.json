@@ -2,7 +2,7 @@
     "projects": [
         {
             "name": "javascript",
-            "image": "/images/javascript.png",
+            "image": "/portfolio/images/javascript.png",
             "list": [
                 {
                     "title": "Supplements",
@@ -30,7 +30,7 @@
         },
         {
             "name": "c++",
-            "image": "/images/c++.png",
+            "image": "/portfolio/images/c++.png",
             "list": [
                 {
                     "title": "Flappy Bird",
@@ -41,7 +41,7 @@
         },
         {
             "name": "nodejs",
-            "image": "/images/nodejs.png",
+            "image": "/portfolio/images/nodejs.png",
             "list": [
                 {
                     "title": "Mock Server",
